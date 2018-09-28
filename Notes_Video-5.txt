@@ -1,0 +1,68 @@
+--Querying for specific resource 
+
+We have to another menthod into our controller to query mongo with specific data :
+You can notice our custome message as well.
+
+getById : (id) => {
+    return new Promise((resolve,reject)=> {
+    Player.findById(id)
+ 		.then(data =>{
+ 			resolve(data)
+ 		})
+ 		.catch(
+             err =>
+             {
+             	reject(new Error('Player of '+id+' not found in databse.'))             
+             }
+ 			)
+    })
+ 	
+ } 
+ 
+Now lets modify the api.js to call this particular menthod of controller :
+here, you can see two input argument via URL which will specify the resource and specific filter.
+router.get('/:resource/:id',(req,res)=>{
+	const resource=req.params.resource
+	const id =req.params.id
+	const controller= controllers[resource]
+
+	if (controller ==null) {
+         res.json({
+         	confirmation : 'failed',
+         	message :'Invalid resource'
+         })
+     return    
+	}
+
+	controller.getById(id)
+	.then( data =>{
+		res.json({
+		confirmation :'success',
+		data : data
+	     }
+		)
+	})
+	.catch( err=>{
+		res.json( {
+		confirmation:'failed',
+		message :err.message
+		   }
+		)
+	})
+})
+ 
+ 
+We can implement another way of filtering the date which is with help of twicking the URL, if you put URL with ?
+then string post filter will be considered as filter and if you pass this into our first get controller then
+we can force Mongo to apply the filter during query as we are passing param input during find Mongo query.
+	const filter =req.query
+controller.get(filter)
+	.then( data =>{
+		res.json({
+		confirmation :'success',
+		data : data
+	     }
+		) 
+		
+http://localhost:3000/api/player?fistName=ankit
+

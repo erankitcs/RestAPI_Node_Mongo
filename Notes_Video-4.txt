@@ -1,0 +1,117 @@
+--Database Model Setup : 
+Create a folder "models" and create two js file for team and player 
+First you have to import mongoose and create a mongoose schema based on your data requirment and then 
+you can export that schema as a model using module export command. 
+
+const mongoose=require("mongoose")
+
+const Player= new mongoose.Schema({
+
+fistName :{type : String, default : ''},
+lastName :{type : String, default : ''},
+position :{type : String, default : ''},
+age:{type : Number, default : 0},
+team :{type : String, default : ''}
+}) ;
+
+module.exports=mongoose.model('Player',Player)
+
+
+
+Next now we can directly call these models into api.js file which will call you MongoDb and fetch the data like below :
+
+router.get('/team',(req,res) => 
+      {
+      	Team.find(null)
+      	.then(
+      		data => {
+      			res.json({
+      				confirmation :'success',
+      				data:data
+      			})
+      		}
+      		)
+      	.catch( err => {
+                res.json({
+                	confirmation:'failed',
+                	message : err.message
+                })
+      	}
+      		)
+      	}
+      
+	)
+
+Now lets make it more modular using controllers : 
+in controllers folder : 
+index.js ---> common controllers which will import all other controllers
+
+const TeamController =require("./TeamController")
+const PlayerController =require("./PlayerController")
+
+module.exports={
+
+	team : TeamController,
+	player: PlayerController
+}
+
+TeamController.js --> controller for Team
+PlayerController.js --> controller for player
+
+In team : 
+
+const Team = require("../models/Team")
+module.exports={
+
+---We are defining this get method as a promise so that it can dynamically resolve the DB call from router.
+ get : (params) => {
+    return new Promise((resolve,reject)=> {
+    Team.find(params)
+ 		.then(data =>{
+ 			resolve(data)
+ 		})
+ 		.catch(
+             err =>
+             {
+             	reject(err)             }
+ 			)
+    })
+ 	
+ }
+}
+
+Next step is to clean-up api.js and use controller instead of direct calling for models
+
+import controllers
+const controllers = require('../controllers')
+
+now call generic resource method of router
+Controller.get was a promise hence we are having .then and .cath callbacks.
+
+router.get('/:resource',(req,res)=>{
+	const resource=req.params.resource
+	const controller= controllers[resource]
+	if (controller ==null) {
+         res.json({
+         	confirmation : 'failed',
+         	message :'Invalid resource'
+         })
+     return    
+	}
+
+	controller.get()
+	.then( data =>{
+		res.json({
+		confirmation :'success',
+		data : data
+	     }
+		)
+	})
+	.catch( err=>{
+		res.json( {
+		confirmation:'failed',
+		message :err.message
+		   }
+		)
+	})
+})

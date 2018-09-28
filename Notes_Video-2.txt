@@ -1,0 +1,84 @@
+---App.js, it has rounting mapping for urls
+	/   -> index.js
+	/api-> api.js
+
+Now, we will be working on api.js to create end points for our rest api service.
+
+router.get('/test',function argument )
+
+eg : 
+router.get('/players',(req,res) => {
+	res.json(
+			{
+				confirmation : 'success' ,
+				data : players
+			}
+		)
+})
+
+
+const players =[
+  {fistName :"ankit",lastName :"Singh",position :"qb",age:37,team :"nyg"},
+  {fistName :"Nikhil",lastName :"Karkra",position :"qb",age:41,team :"nep"},
+  {fistName :"Bharat",lastName :"Dhall",position :"de",age:28,team :"hou"}
+]
+
+
+but as we have discussed, data is considered as resouces in REST terminology. So lets create resources 
+
+router.get('/:resource',(req,res)=>
+	{
+		const resource =req.params.resource
+		if (resource=='team') {
+			res.json(
+			{
+				confirmation : 'success' ,
+				data : teams
+			}
+
+		)
+			return 
+		}
+		if (resource=='player') {
+			res.json(
+			{
+				confirmation : 'success' ,
+				data : players
+			}
+		)
+			return 
+		}
+
+		res.json(
+			{
+				confirmation : 'fail' ,
+				data : 'Invalid request. Resource undefined'
+			}
+        )
+	}
+)
+
+----Now we can combine above data object into one and create more robust route code :
+
+const db ={
+player : players,
+team : teams
+}
+
+const data = db[resource]
+         if (data == null) {
+         res.json(
+			{
+				confirmation : 'fail' ,
+				data : 'Invalid request. Resource undefined'
+			}
+			)
+         return
+         }
+         res.json(
+			{
+				confirmation : 'success' ,
+				data : data
+			}
+           )
+

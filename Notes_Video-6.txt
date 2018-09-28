@@ -1,0 +1,63 @@
+--POST API call 
+We have second method of Rest API which is POST where we send the request to the server insert the 
+entities.
+
+Here we will have router.post method call. It will be almost similar like GET request except
+input params for controller.post method where we will pass JSON object to insert. JSON object 
+can be extracted from request.body 
+
+// POST -Rest API for inserting entities 
+
+router.post('/:resource',(req,res)=>{
+	const resource=req.params.resource
+	const controller=controllers[resource]
+	if (controller == null) {
+		res.json({
+                confirmation :'failed',
+                message :'Invalid Resource'
+		})
+
+	return	
+		}
+      
+    controller.post(req.body)
+    .then(data => {
+    	res.json({
+ 			confirmation :'success',
+ 			data : data	
+    	})
+    })
+    .catch(err => {
+    	res.json({
+    		confirmation :'failed',
+    		message : err.message
+    	})
+    })  
+})
+
+
+We have to amend the controller as well to serve POST request call.
+Notice : We are calling now Team.create mongoose method to insert 
+records.
+
+post : (params) => {
+     return new Promise((resolve,reject)=>{
+     	console.log(params)
+        Team.create(params)
+        .then(data =>{
+        	resolve(data)
+        })
+        .catch(err=>{
+        	reject(err)
+        })
+
+     })
+
+ }
+ 
+---Testing Post request API through Windows CMD : 
+
+C:\Users\Ankit\New folder>curl -X POST -H "Content-Type:application/json" http://localhost:3000/api/team -d "@data.json"
+{"confirmation":"success","data":{"name":"royals","city":"Hoburt","conference":"afc","_id":"5bae210ab9428f1cb4588650","__v":0}}
+C:\Users\Ankit\New folder>
+

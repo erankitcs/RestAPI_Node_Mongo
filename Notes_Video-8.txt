@@ -1,0 +1,58 @@
+---DELETE API call
+
+DELETE API call is used for removing entities.
+
+we will follow similar pattern.
+
+// DELETE - API call for deleting the entities
+
+router.delete('/:resource/:id',(req,res)=>{
+       const resource=req.params.resource
+       const id=req.params.id
+       const controller=controllers[resource]
+       
+       if ( controller == null) {
+       		res.json({
+       			confirmation :'failed',
+       			message :'Invalid Resource'
+       		})
+       	return
+       }
+       controller.delete(id)
+       .then( data =>{
+       		res.json({
+       			confirmation : 'success',
+       			data:data
+       		})
+       })
+       .catch( err =>{
+       	     res.json({
+       	     	confirmation :'failed',
+       			message: err.message
+       	     })
+       			
+       })
+})
+
+
+----
+delete :(id) =>{
+ 	return new Promise((resolve,reject)=>{
+ 		Team.findByIdAndRemove(id)
+ 		.then( () => {
+ 			resolve({id : id } )
+ 		})
+ 		.catch( err => {
+ 			reject(err)
+ 		})
+ 	})
+ }
+ 
+ 
+ ---Testing 
+ 
+
+C:\Users\Ankit\New folder>curl -X DELETE -H "Content-Type:application/json" http://localhost:3000/api/team/5bae20e1b9428f1cb458864e
+{"confirmation":"success","data":{"id":"5bae20e1b9428f1cb458864e"}}
+C:\Users\Ankit\New folder>
+

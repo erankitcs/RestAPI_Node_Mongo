@@ -1,0 +1,57 @@
+--PUT API Call 
+PUT api call in REST API is used for updating a given entity.
+
+We will be writing similar method like POST except that here in PUT API call, we will pass two arguments in
+controller put call.
+
+// PUT - API call for updating the entities
+
+router.put('/:resource/:id',(req,res)=>{
+       const resource=req.params.resource
+       const id=req.params.id
+       const controller=controllers[resource]
+       
+       if ( controller == null) {
+       		res.json({
+       			confirmation :'failed',
+       			message :'Invalid Resource'
+       		})
+       	return
+       }
+       controller.put(id,req.body)
+       .then( data =>{
+       		res.json({
+       			confirmation : 'success',
+       			data:data
+       		})
+       })
+       .catch( err =>{
+       	     res.json({
+       	     	confirmation :'failed',
+       			message: err.message
+       	     })
+       			
+       })
+})
+
+Now to we have to add put method into our controller as well.  Note we are passsing another additional 
+parameter in findByIdAndUpdate method to recieve updated record from Mongo instead of Older one.
+
+ put :(id,params) =>{
+ 	return new Promise((resolve,reject)=>{
+ 		Team.findByIdAndUpdate(id,params,{new :true})
+ 		.then( data => {
+ 			resolve(data)
+ 		})
+ 		.catch( err => {
+ 			reject(err)
+ 		})
+ 	})
+ }
+ 
+---Testing 
+curl -X PUT -H "Content-Type:application/json" http://localhost:3000/api/team/5bae210ab9428f1cb4588650 -d "@data-put.json"
+{"confirmation":"success","data":{"name":"royals","city":"Cains","conference":"afc","_id":"5bae210ab9428f1cb4588650","__v":0}}
+C:\Users\Ankit\New folder>
+
+

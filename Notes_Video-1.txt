@@ -1,0 +1,130 @@
+Rest API :
+  Representational State Transfer
+  Communicational Leyer between Client and Server
+
+We will be learning :
+
+	Creating API from NodeJs
+	Persistent Data with MongoDB
+	HTTP Verbs : GET , POST , PUT , DELETE
+	Deploying API to stagging env.
+
+Prerequisite Testing:
+C:\Users\Ankit\Desktop>node -v
+v8.11.2
+
+C:\Users\Ankit\Desktop>npm -v
+6.1.0
+
+C:\Users\Ankit\Desktop>mongo -version
+MongoDB shell version v3.6.4
+git version: d0181a711f7e7f39e60b5aeb1dc7097bf6ae5856
+OpenSSL version: OpenSSL 1.0.2o-fips  27 Mar 2018
+allocator: tcmalloc
+modules: enterprise
+build environment:
+    distmod: windows-64
+    distarch: x86_64
+    target_arch: x86_64
+
+C:\Users\Ankit\Desktop>npm install -g turbo-cli
+npm WARN deprecated crypto@0.0.3: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
+C:\Users\Ankit\AppData\Roaming\npm\turbo -> C:\Users\Ankit\AppData\Roaming\npm\node_modules\turbo-cli\dist\index.js
++ turbo-cli@0.24.43
+added 212 packages from 209 contributors in 56.181s
+
+C:\Users\Ankit\Desktop>turbo version
+Version 0.24.43
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo>turbo new rest-api
+
+- - - - - Next Steps - - - - -
+1. $ cd rest-api
+2. $ npm install
+3. $ turbo devserver
+4. Open http://localhost:3000 in a browser
+5. Build awesome website, app, SAAS product etc.
+6. Sell startup to Mega Tech Inc. and become billionaire
+7. Start reality TV show
+8. (10 years later) enter re-hab
+9. Sell movie rights to Mega Tech Studios, LLC
+10. Repeat
+- - - - - - - - - - - - - - - - -
+
+For full documentation, visit https://www.turbo360.co
+
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo>cd rest-api
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>npm install
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>turbo devserver
+
+- - - - - - - - - - - - - - -
+
+Turbo dev server running on http://localhost:3000
+Open this address in a browswer to view your project.
+This is a local environment for testing and is NOT actually live on the internet.
+To turn off server: CONTROL-C
+
+- - - - - - - - - - - - - - -
+GET / 200 21.199 ms - 3633
+GET /favicon.ico 404 1.977 ms - 150
+^CTerminate batch job (Y/N)? Y
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>turbo app 5bad9d987c284e001346056e
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>turbo login
+email:  er.ankit.cs@gmail.com
+password:
+Logged In As: er.ankit.cs
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>turbo deploy
+
+
+Deploying to Turbo Staging Environment...
+
+
+> nodemon@1.18.4 postinstall C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\node_modules\nodemon
+> node bin/postinstall || exit 0
+
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.4 (node_modules\fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.4: wanted {"os":"darwin","arch":"any"} (current: {"os":"win32","arch":"x64"})
+
+added 344 packages from 209 contributors and audited 2861 packages in 49.687s
+found 0 vulnerabilities
+
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\DOCUMENTATION.md
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\README.md
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\app.js
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\package-lock.json
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\package.json
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\package.zip
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\bin\www
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\routes\api.js
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\routes\index.js
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\views\index.mustache
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\public\css\bootstrap.css
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\public\js\app.js
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\public\js\dropzone.js
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\public\js\jquery.js
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\public\images\turbo.png
+Uploading ... C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api\.deploy\views\partials\head.mustache
+
+* * * DEPLOY COMPLETE: https://rest-api-ankit-cbjmmb.turbo360-vertex.com * * *
+
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+
+C:\Users\Ankit\Documents\GitHub\RestAPI_Node_Mongo\rest-api>
+
+
